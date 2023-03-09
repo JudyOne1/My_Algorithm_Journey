@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class Code04_RadixSort {
 
 	// only for no-negative value
+	//负数的话，所有数加上最小值全部变为正数
 	public static void radixSort(int[] arr) {
 		if (arr == null || arr.length < 2) {
 			return;
@@ -44,14 +45,17 @@ public class Code04_RadixSort {
 				j = getDigit(arr[i], d);
 				count[j]++;
 			}
+			//累加和
 			for (i = 1; i < radix; i++) {
 				count[i] = count[i] + count[i - 1];
 			}
+			//从右往左遍历，从右往左填
 			for (i = R; i >= L; i--) {
 				j = getDigit(arr[i], d);
 				help[count[j] - 1] = arr[i];
 				count[j]--;
 			}
+			//copy回原数组
 			for (i = L, j = 0; i <= R; i++, j++) {
 				arr[i] = help[j];
 			}

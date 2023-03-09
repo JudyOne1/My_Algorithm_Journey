@@ -4,10 +4,14 @@ package class05;
 // https://leetcode.com/problems/count-of-range-sum/
 public class Code01_CountOfRangeSum {
 
+	//sum{i~j} = sum{0~j} - sum{0~i-1}
+	//arr中找以某个index(j)为结尾的数组 => sum{i~j}是否在[lower,upper]范围上
+	// => sum{0~i-1}是否在[sum{0~j}-upper , sum{0~j}-lower]范围上
 	public static int countRangeSum(int[] nums, int lower, int upper) {
 		if (nums == null || nums.length == 0) {
 			return 0;
 		}
+		//前缀和 数组sum
 		long[] sum = new long[nums.length];
 		sum[0] = nums[0];
 		for (int i = 1; i < nums.length; i++) {

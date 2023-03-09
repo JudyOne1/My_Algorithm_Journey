@@ -30,6 +30,8 @@ public class Code04_BiggerThanRightTwice {
 			}
 			ans += windowR - m - 1;
 		}
+		//先计算👆
+		//再merge👇
 		int[] help = new int[r - L + 1];
 		int i = 0;
 		int p1 = L;

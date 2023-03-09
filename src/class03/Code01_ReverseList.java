@@ -24,24 +24,6 @@ public class Code01_ReverseList {
 		}
 	}
 
-	/**
-	 * my
-	 * @param head
-	 * @return
-	 */
-
-	public Node reverseNode(Node head){
-		Node pre = null;
-		Node next = null;
-		while (head.next != null){
-			next = head.next;
-			head.next = pre;
-			pre = head;
-			head = next;
-		}
-	}
-
-
 
 	//  head
 	//   a    ->   b    ->  c  ->  null

@@ -152,6 +152,7 @@ public class Code02_EveryStepShowBoss {
 			if (!map.containsKey(id)) {
 				map.put(id, new Customer(id, 0, 0));
 			}
+
 			// 买、卖
 			Customer c = map.get(id);
 			if (buyOrRefund) {
@@ -162,8 +163,9 @@ public class Code02_EveryStepShowBoss {
 			if (c.buy == 0) {
 				map.remove(id);
 			}
+
 			// c
-			// 下面做
+			// 下面做  新进来的并且发生购买事件
 			if (!cands.contains(c) && !daddy.contains(c)) {
 				if (daddy.size() < k) {
 					c.enterTime = i;

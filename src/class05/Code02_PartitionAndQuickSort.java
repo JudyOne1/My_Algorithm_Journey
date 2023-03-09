@@ -9,8 +9,7 @@ public class Code02_PartitionAndQuickSort {
 	}
 
 	// arr[L..R]上，以arr[R]位置的数做划分值
-	// <= X > X
-	// <= X X
+	// x<= X x | x > X
 	public static int partition(int[] arr, int L, int R) {
 		if (L > R) {
 			return -1;
@@ -31,16 +30,17 @@ public class Code02_PartitionAndQuickSort {
 	}
 
 	// arr[L...R] 玩荷兰国旗问题的划分，以arr[R]做划分值
-	// <arr[R] ==arr[R] > arr[R]
+	// <arr[R] | ==arr[R] | >arr[R]
 	public static int[] netherlandsFlag(int[] arr, int L, int R) {
 		if (L > R) { // L...R L>R
 			return new int[] { -1, -1 };
 		}
-		if (L == R) {
+		if (L == R) {// 一个
 			return new int[] { L, R };
 		}
+		// L-1 】[L    R-1【 R]
 		int less = L - 1; // < 区 右边界
-		int more = R; // > 区 左边界
+		int more = R;     // > 区 左边界
 		int index = L;
 		while (index < more) { // 当前位置，不能和 >区的左边界撞上
 			if (arr[index] == arr[R]) {

@@ -29,7 +29,8 @@ public class Code01_MergeSort {
 		int i = 0;
 		int p1 = L;
 		int p2 = M + 1;
-		while (p1 <= M && p2 <= R) {
+		while (p1 <= M && p2 <= R) {//都没越界的前提下
+			//谁小拷贝谁 并且对应指针向下移动
 			help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
 		}
 		// 要么p1越界了，要么p2越界了

@@ -43,6 +43,7 @@ public class Code02_Heap {
 		}
 
 		// 新加进来的数，现在停在了index位置，请依次往上移动，
+		// 不断向上看父节点，能干掉就交换，不能就停下
 		// 移动到0位置，或者干不掉自己的父亲了，停！
 		private void heapInsert(int[] arr, int index) {
 			// [index] [index-1]/2
@@ -54,17 +55,20 @@ public class Code02_Heap {
 		}
 
 		// 从index位置，往下看，不断的下沉
-		// 停：较大的孩子都不再比index位置的数大；已经没孩子了
+		// 往下看，与较大的孩子比较
+		// 停：较大的孩子都不再比index位置的数大or已经没孩子了
 		private void heapify(int[] arr, int index, int heapSize) {
 			int left = index * 2 + 1;
-			while (left < heapSize) { // 如果有左孩子，有没有右孩子，可能有可能没有！
+			while (left < heapSize) { // 如果有左孩子，有没有右孩子? 可能有可能没有！
 				// 把较大孩子的下标，给largest
+				//  左右孩子比较     有右孩子👇
 				int largest = left + 1 < heapSize && arr[left + 1] > arr[left] ? left + 1 : left;
+				//  父子比较
 				largest = arr[largest] > arr[index] ? largest : index;
 				if (largest == index) {
-					break;
+					break;//父亲大于 大孩子  停！
 				}
-				// index和较大孩子，要互换
+				// index和较大孩子互换
 				swap(arr, largest, index);
 				index = largest;
 				left = index * 2 + 1;
