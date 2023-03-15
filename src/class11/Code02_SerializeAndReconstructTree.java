@@ -129,12 +129,12 @@ public class Code02_SerializeAndReconstructTree {
 			Queue<Node> queue = new LinkedList<Node>();
 			queue.add(head);
 			while (!queue.isEmpty()) {
-				head = queue.poll(); // head 父   子
-				if (head.left != null) {
+				head = queue.poll(); // head 作为父 去处理子
+				if (head.left != null) {//既序列化又放入队列
 					ans.add(String.valueOf(head.left.value));
 					queue.add(head.left);
 				} else {
-					ans.add(null);
+					ans.add(null);//只序列化不放入队列
 				}
 				if (head.right != null) {
 					ans.add(String.valueOf(head.right.value));

@@ -94,6 +94,26 @@ public class Code03_UnRecursiveTraversalBT {
 			}
 		}
 		System.out.println();
+
+	}
+
+	public static void pre2(Node head){
+		System.out.println("test遍历");
+		if (head != null) {
+			Stack<Node> stack = new Stack<>();
+			stack.add(head);
+			Node cur;
+			while (!stack.isEmpty()){
+				cur = stack.pop();
+				System.out.print(cur.value+" ");
+				if (cur.left!=null){
+					stack.push(cur.left);
+				}
+				if (cur.right!=null){
+					stack.push(cur.right);
+				}
+			}
+		}
 	}
 
 	public static void main(String[] args) {
@@ -113,6 +133,7 @@ public class Code03_UnRecursiveTraversalBT {
 		System.out.println("========");
 		pos2(head);
 		System.out.println("========");
+		pre2(head);
 	}
 
 }
