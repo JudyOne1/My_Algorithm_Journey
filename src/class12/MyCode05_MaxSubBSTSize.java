@@ -1,0 +1,86 @@
+package class12;
+
+/**
+ * @author Judy
+ * @create 2023-03-17-21:54
+ * 给定一棵二叉树的头节点head，返回这颗二叉树中最大的二叉搜索子树的大小
+ * isBST，L.max< X < R.min
+ * MS , 
+ *
+ */
+public class MyCode05_MaxSubBSTSize {
+    public static class TreeNode {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+
+        public TreeNode(int value) {
+            val = value;
+        }
+    }
+
+    public static int largestBSTSubtree(TreeNode head) {
+        if (head == null) {
+            return 0;
+        }
+        return process(head).maxBSTSubtreeSize;
+    }
+
+    private static Info process(TreeNode x) {
+        if (x == null) {
+            return null;
+        }
+        Info leftInfo = process(x.left);
+        Info rightInfo = process(x.right);
+        int max ,min;
+        max = min = x.val;
+        int allSize = 1;
+        if (leftInfo!=null){
+            max = Math.max(leftInfo.max,max);
+            min = Math.min(leftInfo.min,min);
+            allSize += leftInfo.allSize;
+        }
+        if (rightInfo!=null){
+            max = Math.max(rightInfo.max,max);
+            min = Math.min(rightInfo.min,min);
+            allSize += rightInfo.allSize;
+        }
+        int p1 = 0;
+        if (leftInfo != null){
+            p1 = leftInfo.maxBSTSubtreeSize;
+        }
+        int p2 = 0;
+        if (rightInfo != null){
+            p2 = rightInfo.maxBSTSubtreeSize;
+        }
+        int p3 = 0;
+        boolean leftBST = leftInfo == null ? true : (leftInfo.maxBSTSubtreeSize == leftInfo.allSize);
+        boolean rightBST = rightInfo == null ? true : (rightInfo.maxBSTSubtreeSize == rightInfo.allSize);
+        if (leftBST && rightBST) {
+            boolean leftMaxLessX = leftInfo == null ? true : (leftInfo.max < x.val);
+            boolean rightMinMoreX = rightInfo == null ? true : (x.val < rightInfo.min);
+            if (leftMaxLessX && rightMinMoreX) {
+                int leftSize = leftInfo == null ? 0 : leftInfo.allSize;
+                int rightSize = rightInfo == null ? 0 : rightInfo.allSize;
+                p3 = leftSize + rightSize + 1;
+            }
+        }
+        return new Info(Math.max(p1, Math.max(p2, p3)), allSize, max, min);
+
+
+    }
+
+    public static class Info {
+        public int maxBSTSubtreeSize;
+        public int allSize;
+        public int max;
+        public int min;
+
+        public Info(int m, int a, int ma, int mi) {
+            maxBSTSubtreeSize = m;
+            allSize = a;
+            max = ma;
+            min = mi;
+        }
+    }
+}

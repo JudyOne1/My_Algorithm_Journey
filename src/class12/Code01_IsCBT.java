@@ -110,8 +110,6 @@ public class Code01_IsCBT {
 						&& rightInfo.isCBT && leftInfo.height == rightInfo.height) {
 					isCBT = true;
 				}
-				
-				
 			}
 		}
 		return new Info(isFull, isCBT, height);
