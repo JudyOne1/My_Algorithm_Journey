@@ -12,7 +12,7 @@ public class Code03_NumberOfIslandsII {
 	public static List<Integer> numIslands21(int m, int n, int[][] positions) {
 		UnionFind1 uf = new UnionFind1(m, n);
 		List<Integer> ans = new ArrayList<>();
-		for (int[] position : positions) {
+		for (int[] position : positions) {//[a,b]输入位置
 			ans.add(uf.connect(position[0], position[1]));
 		}
 		return ans;
@@ -20,7 +20,7 @@ public class Code03_NumberOfIslandsII {
 
 	public static class UnionFind1 {
 		private int[] parent;
-		private int[] size;
+		private int[] size;//size合并时不清空，以此来判断有无被初始化过
 		private int[] help;
 		private final int row;
 		private final int col;
@@ -54,7 +54,7 @@ public class Code03_NumberOfIslandsII {
 
 		private void union(int r1, int c1, int r2, int c2) {
 			if (r1 < 0 || r1 == row || r2 < 0 || r2 == row || c1 < 0 || c1 == col || c2 < 0 || c2 == col) {
-				return;
+				return;//检查越界
 			}
 			int i1 = index(r1, c1);
 			int i2 = index(r2, c2);
@@ -77,7 +77,7 @@ public class Code03_NumberOfIslandsII {
 
 		public int connect(int r, int c) {
 			int index = index(r, c);
-			if (size[index] == 0) {
+			if (size[index] == 0) {//第一回到达此位置
 				parent[index] = index;
 				size[index] = 1;
 				sets++;
@@ -90,7 +90,7 @@ public class Code03_NumberOfIslandsII {
 		}
 
 	}
-
+//----------------------------------------------------------------
 	// 课上讲的如果m*n比较大，会经历很重的初始化，而k比较小，怎么优化的方法
 	public static List<Integer> numIslands22(int m, int n, int[][] positions) {
 		UnionFind2 uf = new UnionFind2();

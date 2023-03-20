@@ -15,9 +15,9 @@ public class Code05_UnionFind {
 	}
 
 	public static class UnionFind<V> {
-		public HashMap<V, Node<V>> nodes;
-		public HashMap<Node<V>, Node<V>> parents;
-		public HashMap<Node<V>, Integer> sizeMap;
+		public HashMap<V, Node<V>> nodes;//值 对应 node
+		public HashMap<Node<V>, Node<V>> parents;  // 子 对应 父
+		public HashMap<Node<V>, Integer> sizeMap;  // 头 对应 size
 
 		public UnionFind(List<V> values) {
 			nodes = new HashMap<>();
@@ -32,14 +32,15 @@ public class Code05_UnionFind {
 		}
 
 		// 给你一个节点，请你往上到不能再往上，把代表返回
+		// 优化：扁平化
 		public Node<V> findFather(Node<V> cur) {
-			Stack<Node<V>> path = new Stack<>();
-			while (cur != parents.get(cur)) {
+			Stack<Node<V>> path = new Stack<>(); //容器，加入往上找沿途所有结点
+			while (cur != parents.get(cur)) {//没到达最上
 				path.push(cur);
 				cur = parents.get(cur);
 			}
-			while (!path.isEmpty()) {
-				parents.put(path.pop(), cur);
+			while (!path.isEmpty()) {//cur == parents.get(cur)
+				parents.put(path.pop(), cur);//这些结点 设置 父为 cur
 			}
 			return cur;
 		}
