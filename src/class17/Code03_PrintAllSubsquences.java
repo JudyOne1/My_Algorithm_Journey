@@ -19,16 +19,16 @@ public class Code03_PrintAllSubsquences {
 	// 来到了str[index]字符，index是位置
 	// str[0..index-1]已经走过了！之前的决定，都在path上
 	// 之前的决定已经不能改变了，就是path
-	// str[index....]还能决定，之前已经确定，而后面还能自由选择的话，
+	// str[index....最后]还能决定，之前已经确定，而后面还能自由选择的话，
 	// 把所有生成的子序列，放入到ans里去
 	public static void process1(char[] str, int index, List<String> ans, String path) {
 		if (index == str.length) {
 			ans.add(path);
 			return;
 		}
-		// 没有要index位置的字符
+		// path不变 没有要index位置的字符
 		process1(str, index + 1, ans, path);
-		// 要了index位置的字符
+		// path变了  要了index位置的字符
 		process1(str, index + 1, ans, path + String.valueOf(str[index]));
 	}
 

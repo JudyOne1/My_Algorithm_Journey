@@ -27,9 +27,9 @@ public class Code04_PrintAllPermutations {
 			int N = rest.size();
 			for (int i = 0; i < N; i++) {
 				char cur = rest.get(i);
-				rest.remove(i);
+				rest.remove(i);//删除当前字符
 				f(rest, path + cur, ans);
-				rest.add(i, cur);
+				rest.add(i, cur);//恢复现场  恢复当前字符
 			}
 		}
 	}
@@ -51,11 +51,11 @@ public class Code04_PrintAllPermutations {
 			for (int i = index; i < str.length; i++) {
 				swap(str, index, i);
 				g1(str, index + 1, ans);
-				swap(str, index, i);
+				swap(str, index, i);//恢复现场
 			}
 		}
 	}
-
+//--------------------------------------------------------
 	public static List<String> permutation3(String s) {
 		List<String> ans = new ArrayList<>();
 		if (s == null || s.length() == 0) {

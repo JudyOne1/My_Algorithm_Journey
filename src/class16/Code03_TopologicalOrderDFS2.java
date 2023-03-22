@@ -46,7 +46,7 @@ public class Code03_TopologicalOrderDFS2 {
 		for (Record r : order.values()) {
 			recordArr.add(r);
 		}
-		recordArr.sort(new MyComparator());
+		recordArr.sort(new MyComparator());//排序，点次的降序
 		ArrayList<DirectedGraphNode> ans = new ArrayList<DirectedGraphNode>();
 		for (Record r : recordArr) {
 			ans.add(r.node);
@@ -66,10 +66,10 @@ public class Code03_TopologicalOrderDFS2 {
 		// cur的点次之前没算过！
 		long nodes = 0;
 		for (DirectedGraphNode next : cur.neighbors) {
-			nodes += f(next, order).nodes;
+			nodes += f(next, order).nodes;//计算点次
 		}
-		Record ans = new Record(cur, nodes + 1);
-		order.put(cur, ans);
+		Record ans = new Record(cur, nodes + 1);//生成我的记录
+		order.put(cur, ans);//加入到缓存中
 		return ans;
 	}
 

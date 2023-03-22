@@ -77,7 +77,7 @@ public class Code02_Hanoi {
 	}
 
 	public static void func(int N, String from, String to, String other) {
-		if (N == 1) { // base
+		if (N == 1) { // base case
 			System.out.println("Move 1 from " + from + " to " + to);
 		} else {
 			func(N - 1, from, other, to);
