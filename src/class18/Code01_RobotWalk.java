@@ -18,18 +18,19 @@ public class Code01_RobotWalk {
 		if (rest == 0) { // 如果已经不需要走了，走完了！
 			return cur == aim ? 1 : 0;
 		}
-		// (cur, rest)
+		// (cur, rest) 当前在最左边 只能往右走
 		if (cur == 1) { // 1 -> 2
 			return process1(2, rest - 1, aim, N);
 		}
-		// (cur, rest)
+		// (cur, rest) 当前在最右边 只能往左走
 		if (cur == N) { // N-1 <- N
 			return process1(N - 1, rest - 1, aim, N);
 		}
-		// (cur, rest)
+		// (cur, rest) 中间  往左走的方法数+往右走的方法数
 		return process1(cur - 1, rest - 1, aim, N) + process1(cur + 1, rest - 1, aim, N);
 	}
 
+	//傻缓存 【自顶向下的动态规划，记忆化搜索】
 	public static int ways2(int N, int start, int aim, int K) {
 		if (N < 2 || start < 1 || start > N || aim < 1 || aim > N || K < 1) {
 			return -1;
@@ -37,23 +38,24 @@ public class Code01_RobotWalk {
 		int[][] dp = new int[N + 1][K + 1];
 		for (int i = 0; i <= N; i++) {
 			for (int j = 0; j <= K; j++) {
-				dp[i][j] = -1;
+				dp[i][j] = -1;//初始化为 -1
 			}
 		}
 		// dp就是缓存表
 		// dp[cur][rest] == -1 -> process1(cur, rest)之前没算过！
-		// dp[cur][rest] != -1 -> process1(cur, rest)之前算过！返回值，dp[cur][rest]
+		// dp[cur][rest] != -1 -> process1(cur, rest)之前已经算过！返回值是 dp[cur][rest]
 		// N+1 * K+1
 		return process2(start, K, aim, N, dp);
 	}
 
-	// cur 范: 1 ~ N
-	// rest 范：0 ~ K
+	// cur  范围: 1 ~ N
+	// rest 范围：0 ~ K
+	// 所有的重复过程只碰一遍
 	public static int process2(int cur, int rest, int aim, int N, int[][] dp) {
-		if (dp[cur][rest] != -1) {
+		if (dp[cur][rest] != -1) { //缓存命中
 			return dp[cur][rest];
 		}
-		// 之前没算过！
+		// 之前没算过！ 缓存中没有
 		int ans = 0;
 		if (rest == 0) {
 			ans = cur == aim ? 1 : 0;
@@ -64,22 +66,24 @@ public class Code01_RobotWalk {
 		} else {
 			ans = process2(cur - 1, rest - 1, aim, N, dp) + process2(cur + 1, rest - 1, aim, N, dp);
 		}
-		dp[cur][rest] = ans;
+		dp[cur][rest] = ans; //加入缓存表
 		return ans;
 
 	}
-
+	//  final  生成表格
 	public static int ways3(int N, int start, int aim, int K) {
 		if (N < 2 || start < 1 || start > N || aim < 1 || aim > N || K < 1) {
 			return -1;
 		}
 		int[][] dp = new int[N + 1][K + 1];
-		dp[aim][0] = 1;
+		dp[aim][0] = 1;  //dp[...][0] = 0
 		for (int rest = 1; rest <= K; rest++) {
 			dp[1][rest] = dp[2][rest - 1];
+
 			for (int cur = 2; cur < N; cur++) {
 				dp[cur][rest] = dp[cur - 1][rest - 1] + dp[cur + 1][rest - 1];
 			}
+
 			dp[N][rest] = dp[N - 1][rest - 1];
 		}
 		return dp[start][K];

@@ -172,10 +172,6 @@ public class MyCode02_NumberOfIslands {
         return uf.sets;
     }
 
-
-
-
-
     public static class UnionFind2 {
         private int[] parent;
         private int[] size;
