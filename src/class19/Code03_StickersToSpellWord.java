@@ -31,10 +31,10 @@ public class Code03_StickersToSpellWord {
 		char[] str1 = s1.toCharArray();
 		char[] str2 = s2.toCharArray();
 		int[] count = new int[26];
-		for (char cha : str1) {
+		for (char cha : str1) {//统计原字符长度
 			count[cha - 'a']++;
 		}
-		for (char cha : str2) {
+		for (char cha : str2) {//减去原字符个数
 			count[cha - 'a']--;
 		}
 		StringBuilder builder = new StringBuilder();
@@ -57,7 +57,7 @@ public class Code03_StickersToSpellWord {
 			for (char cha : str) {
 				counts[i][cha - 'a']++;
 			}
-		}
+		}//词频统计
 		int ans = process2(counts, target);
 		return ans == Integer.MAX_VALUE ? -1 : ans;
 	}
@@ -84,7 +84,7 @@ public class Code03_StickersToSpellWord {
 			// 尝试第一张贴纸是谁
 			int[] sticker = stickers[i];
 			// 最关键的优化(重要的剪枝!这一步也是贪心!)
-			if (sticker[target[0] - 'a'] > 0) {
+			if (sticker[target[0] - 'a'] > 0) {//只有包含target第一个字符的才有机会
 				StringBuilder builder = new StringBuilder();
 				for (int j = 0; j < 26; j++) {
 					if (tcounts[j] > 0) {
@@ -101,6 +101,7 @@ public class Code03_StickersToSpellWord {
 		return min + (min == Integer.MAX_VALUE ? 0 : 1);
 	}
 
+	//傻缓存  做不了严格位置依赖
 	public static int minStickers3(String[] stickers, String target) {
 		int N = stickers.length;
 		int[][] counts = new int[N][26];
