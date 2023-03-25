@@ -20,7 +20,7 @@ public class Code03_StickersToSpellWord {
 		int min = Integer.MAX_VALUE;
 		for (String first : stickers) {
 			String rest = minus(target, first);
-			if (rest.length() != target.length()) {
+			if (rest.length() != target.length()) {//有效
 				min = Math.min(min, process1(stickers, rest));
 			}
 		}
