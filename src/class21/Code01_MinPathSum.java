@@ -23,7 +23,7 @@ public class Code01_MinPathSum {
 		}
 		return dp[row - 1][col - 1];
 	}
-
+	//数组压缩
 	public static int minPathSum2(int[][] m) {
 		if (m == null || m.length == 0 || m[0] == null || m[0].length == 0) {
 			return 0;

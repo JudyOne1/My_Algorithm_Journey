@@ -103,9 +103,9 @@ public class Code03_Coffee {
 			return 0;
 		}
 		// index号杯子 决定洗
-		int selfClean1 = Math.max(drinks[index], free) + wash;
+		int selfClean1 = Math.max(drinks[index], free) + wash;//咖啡喝完的时间点 与 洗机器可用的时间点比较，谁大才是真正可以开始洗的时间
 		int restClean1 = bestTime(drinks, wash, air, index + 1, selfClean1);
-		int p1 = Math.max(selfClean1, restClean1);
+		int p1 = Math.max(selfClean1, restClean1);//自己 和 剩余杯子 中 最晚的时间点
 
 		// index号杯子 决定挥发
 		int selfClean2 = drinks[index] + air;
@@ -117,31 +117,43 @@ public class Code03_Coffee {
 	// 贪心+优良尝试改成动态规划
 	public static int minTime2(int[] arr, int n, int a, int b) {
 		PriorityQueue<Machine> heap = new PriorityQueue<Machine>(new MachineComparator());
-		for (int i = 0; i < arr.length; i++) {
-			heap.add(new Machine(0, arr[i]));
+		for (int i = 0; i < arr.length; i++) {//最开始
+			heap.add(new Machine(0, arr[i]));//加入到小根堆
 		}
 		int[] drinks = new int[n];
 		for (int i = 0; i < n; i++) {
 			Machine cur = heap.poll();
 			cur.timePoint += cur.workTime;
-			drinks[i] = cur.timePoint;
+			drinks[i] = cur.timePoint;//i号喝完的时间
 			heap.add(cur);
 		}
 		return bestTimeDp(drinks, a, b);
 	}
+//动态规划
 
+	/**
+	 * 递归函数 bestTime 中有两个可变参数 index 和 free，index 的变化范围 0~n，
+	 * 而 free 的变化范围不知道。这就是业务限制模型。
+	 *
+	 * 【业务限制模型：可变参数不能直观地得到变化范围】
+	 *
+	 * 这时，就要人为地想限制，将 free 的变化范围估出来。
+	 *
+	 * free 的最大值就是所有杯子都去洗，能到达的最大的值。【限制不够，业务来凑】
+	 */
 	public static int bestTimeDp(int[] drinks, int wash, int air) {
 		int N = drinks.length;
 		int maxFree = 0;
-		for (int i = 0; i < drinks.length; i++) {
+		for (int i = 0; i < drinks.length; i++) {//所有杯子都拿去洗
 			maxFree = Math.max(maxFree, drinks[i]) + wash;
 		}
 		int[][] dp = new int[N + 1][maxFree + 1];
+		//dp[N][...] = 0
 		for (int index = N - 1; index >= 0; index--) {
 			for (int free = 0; free <= maxFree; free++) {
 				int selfClean1 = Math.max(drinks[index], free) + wash;
-				if (selfClean1 > maxFree) {
-					break; // 因为后面的也都不用填了
+				if (selfClean1 > maxFree) {//越界了
+					break; // 因为后面的 都不用填了
 				}
 				// index号杯子 决定洗
 				int restClean1 = dp[index + 1][selfClean1];

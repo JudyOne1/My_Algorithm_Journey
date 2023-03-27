@@ -17,20 +17,20 @@ public class Code04_CoinsWaySameValueSamePapper {
 
 	public static Info getInfo(int[] arr) {
 		HashMap<Integer, Integer> counts = new HashMap<>();
-		for (int value : arr) {
+		for (int value : arr) {//统计  去重
 			if (!counts.containsKey(value)) {
 				counts.put(value, 1);
 			} else {
 				counts.put(value, counts.get(value) + 1);
 			}
 		}
-		int N = counts.size();
+		int N = counts.size();//面值的多少
 		int[] coins = new int[N];
 		int[] zhangs = new int[N];
 		int index = 0;
 		for (Entry<Integer, Integer> entry : counts.entrySet()) {
-			coins[index] = entry.getKey();
-			zhangs[index++] = entry.getValue();
+			coins[index] = entry.getKey();//面值
+			zhangs[index++] = entry.getValue();//张数
 		}
 		return new Info(coins, zhangs);
 	}
@@ -90,12 +90,12 @@ public class Code04_CoinsWaySameValueSamePapper {
 		dp[N][0] = 1;
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
-				dp[index][rest] = dp[index + 1][rest];
+				dp[index][rest] = dp[index + 1][rest];//a
 				if (rest - coins[index] >= 0) {
-					dp[index][rest] += dp[index][rest - coins[index]];
+					dp[index][rest] += dp[index][rest - coins[index]];//※
 				}
-				if (rest - coins[index] * (zhangs[index] + 1) >= 0) {
-					dp[index][rest] -= dp[index + 1][rest - coins[index] * (zhangs[index] + 1)];
+				if (rest - coins[index] * (zhangs[index] + 1) >= 0) {//检查是否多加了：rest - (极限张数 + 1) * 面值 如果还大于0，那就是多加了
+					dp[index][rest] -= dp[index + 1][rest - coins[index] * (zhangs[index] + 1)];//减去多加的部分
 				}
 			}
 		}

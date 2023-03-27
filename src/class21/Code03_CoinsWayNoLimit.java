@@ -31,7 +31,7 @@ public class Code03_CoinsWayNoLimit {
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
 				int ways = 0;
-				for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
+				for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {//需要枚举(for循环)才能搞出一个格子，需要继续优化
 					ways += dp[index + 1][rest - (zhang * arr[index])];
 				}
 				dp[index][rest] = ways;
@@ -49,9 +49,9 @@ public class Code03_CoinsWayNoLimit {
 		dp[N][0] = 1;
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
-				dp[index][rest] = dp[index + 1][rest];
+				dp[index][rest] = dp[index + 1][rest];// 楼下
 				if (rest - arr[index] >= 0) {
-					dp[index][rest] += dp[index][rest - arr[index]];
+					dp[index][rest] += dp[index][rest - arr[index]];// ※
 				}
 			}
 		}

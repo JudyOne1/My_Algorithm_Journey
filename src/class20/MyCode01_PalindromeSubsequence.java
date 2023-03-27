@@ -1,0 +1,119 @@
+package class20;
+
+import java.util.Arrays;
+
+/**
+ * @author Judy
+ * @create 2023-03-27-14:45
+ * 给定一个字符串str，返回这个字符串的最长回文子序列长度
+ * 比如 ： str = “a12b3c43def2ghi1kpm”
+ * 最长回文子序列是“1234321”或者“123c321”，返回长度7
+ * 测试链接：https://leetcode.com/problems/longest-palindromic-subsequence/
+ */
+public class MyCode01_PalindromeSubsequence {
+    //way1 生成这个字符串的倒序，将这两个字符串求最大共同序列长度
+    public static int longestCommonSubsequence1(String s1, String s2) {
+        System.out.println(s1);
+        System.out.println(s2);
+        char[] str1 = s1.toCharArray();
+        char[] str2 = s2.toCharArray();
+        return process(str1, str2, str1.length - 1, str2.length - 1);
+    }
+
+    private static int process(char[] str1, char[] str2, int i, int j) {
+        if (i == 0 && j == 0) {
+            return str1[i] == str2[j] ? 1 : 0;
+        }
+        if (i == 0) {
+            return str1[i] == str2[j] ? 1 : process(str1, str2, i, j - 1);
+        }
+        if (j == 0) {
+            return str1[i] == str2[j] ? 1 : process(str1, str2, i - 1, j);
+        }
+        int p1 = process(str1, str2, i - 1, j);
+        int p2 = process(str1, str2, i, j - 1);
+        int p3 = str1[i] == str2[j] ? 1 + process(str1, str2, i - 1, j - 1) : 0;
+        return Math.max(Math.max(p1, p2), p3);
+    }
+
+    public static int PalindromeSubsequence(String str) {
+        char[] str1 = str.toCharArray();
+        char[] str2 = str.toCharArray();
+        for (int i = 0; i < (str1.length / 2); i++) {
+            char temp = str1[i];
+            str1[i] = str1[str1.length - i - 1];
+            str1[str1.length - i - 1] = temp;
+        }
+
+        return longestCommonSubsequence1(String.valueOf(str1), String.valueOf(str2));
+    }
+
+    public static void main(String[] args) {
+        String str = "abcdefcba";
+        char[] str1 = str.toCharArray();
+        System.out.println(String.valueOf(str1));
+        System.out.println(str1.toString());
+
+        System.out.println(str);
+        //法1
+        for (int i = 0; i < (str1.length / 2); i++) {
+            char temp = str1[i];
+            str1[i] = str1[str1.length - i - 1];
+            str1[str1.length - i - 1] = temp;
+        }
+
+        char[] str2 = str.toCharArray();
+        //法2
+        for (int i = 0, j = str2.length - 1; i < j; i++, j--) {
+            char temp = str2[i];
+            str2[i] = str2[j];
+            str2[j] = temp;
+        }
+        System.out.println(str2);
+        System.out.println(str1);
+        System.out.println("======================");
+        System.out.println(PalindromeSubsequence(str));
+    }
+
+    //way2  范围模型
+    public static int lpsl1(String s) {
+        char[] str = s.toCharArray();
+        return f(str, 0, str.length - 1);
+    }
+
+    private static int f(char[] str, int L, int R) {
+        if (L == R) {
+            return 1;
+        }
+        if (L == R - 1) {
+            return str[L] == str[R] ? 2 : 1;
+        }
+        int p1 = f(str,L,R-1);
+//        int p2 = f(str,L+1,R-1);
+        int p3 = f(str,L+1,R);
+        int p4 = str[L] == str[R] ? 2+f(str,L+1,R-1):0;
+//        return Math.max(Math.max(p1, p2), Math.max(p3, p4));
+        return Math.max(p1, Math.max(p3, p4));
+    }
+    //dp
+    public static int lpsl2(String s) {
+        char[] str = s.toCharArray();
+        int N = str.length;
+        int[][] dp = new int[N][N];
+        dp[N - 1][N - 1] = 1;
+        for (int i = 0; i < N-1; i++) {
+            dp[i][i] = 1;
+            dp[i][i+1] = str[i] == str[i+1] ? 2 : 1;
+        }
+        for (int L = N - 3; L >= 0; L--) {//row
+            for (int R = L + 2; R < N; R++) {//col
+                int p1 = dp[L][R-1];
+                int p2 = dp[L+1][R];
+                int p3 = str[L] == str[R] ? 2+dp[L+1][R-1]:0;
+                dp[L][R] = Math.max(p1, Math.max(p3, p2));
+            }
+        }
+        return dp[0][N-1];
+    }
+
+}
