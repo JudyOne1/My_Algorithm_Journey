@@ -8,16 +8,18 @@ public class Code02_MinCoinsNoLimit {
 
 	// arr[index...]面值，每种面值张数自由选择，
 	// 搞出rest正好这么多钱，返回最小张数
-	// 拿Integer.MAX_VALUE标记怎么都搞定不了
+	// 拿 Integer.MAX_VALUE标记 怎么都搞定不了
 	public static int process(int[] arr, int index, int rest) {
-		if (index == arr.length) {
+		//rest不可能小于0，因为上游已经控制了
+		if (index == arr.length) {//没钱了，且rest=0，那么只需要0张组成rest
 			return rest == 0 ? 0 : Integer.MAX_VALUE;
 		} else {
 			int ans = Integer.MAX_VALUE;
-			for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
-				int next = process(arr, index + 1, rest - zhang * arr[index]);
-				if (next != Integer.MAX_VALUE) {
-					ans = Math.min(ans, zhang + next);
+			//index位置的面值从0张开始尝试
+			for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {//这里控制rest不可能小于0
+				int next = process(arr, index + 1, rest - zhang * arr[index]);//后序的
+				if (next != Integer.MAX_VALUE) {//后序是有效的
+					ans = Math.min(ans, zhang + next);//
 				}
 			}
 			return ans;
@@ -37,7 +39,7 @@ public class Code02_MinCoinsNoLimit {
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
 				int ans = Integer.MAX_VALUE;
-				for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {
+				for (int zhang = 0; zhang * arr[index] <= rest; zhang++) {//有枚举行为
 					int next = dp[index + 1][rest - zhang * arr[index]];
 					if (next != Integer.MAX_VALUE) {
 						ans = Math.min(ans, zhang + next);
@@ -62,8 +64,8 @@ public class Code02_MinCoinsNoLimit {
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
 				dp[index][rest] = dp[index + 1][rest];
-				if (rest - arr[index] >= 0 
-						&& dp[index][rest - arr[index]] != Integer.MAX_VALUE) {
+				if (rest - arr[index] >= 0  // 左边有格子
+						&& dp[index][rest - arr[index]] != Integer.MAX_VALUE) {//且 至少有一个有效的
 					dp[index][rest] = Math.min(dp[index][rest], dp[index][rest - arr[index]] + 1);
 				}
 			}

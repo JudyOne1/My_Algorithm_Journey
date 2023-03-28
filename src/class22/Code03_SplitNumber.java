@@ -20,7 +20,7 @@ public class Code03_SplitNumber {
 		if (rest == 0) {
 			return 1;
 		}
-		if (pre > rest) {
+		if (pre > rest) {//前置的数比剩下的数大，走不通 (3,2) 剩下2怎么用3来拆？
 			return 0;
 		}
 		int ways = 0;
