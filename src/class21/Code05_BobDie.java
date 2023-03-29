@@ -53,6 +53,26 @@ public class Code05_BobDie {
 	public static void main(String[] args) {
 		System.out.println(livePosibility1(6, 6, 10, 50, 50));
 		System.out.println(livePosibility2(6, 6, 10, 50, 50));
+		System.out.println(livePosibility3(6, 6, 10, 50, 50));
 	}
 
+	public static double livePosibility3(int row, int col, int k, int N, int M) {
+		return (double) process3(row, col, k, N, M) / Math.pow(4, k);
+	}
+
+	private static long process3(int row, int col, int rest, int N, int M) {
+		if (row < 0 || row == N || col < 0 || col == M) {
+			//走出界了die
+			return 0;
+		}
+		//没走出界 live
+		if (rest == 0){
+			return 1;
+		}
+		long ways = process3(row+1,col,rest-1,N,M);
+		ways+=process3(row-1,col,rest-1,N,M);
+		ways+=process3(row,col+1,rest-1,N,M);
+		ways+=process3(row,col-1,rest-1,N,M);
+		return ways;
+	}
 }

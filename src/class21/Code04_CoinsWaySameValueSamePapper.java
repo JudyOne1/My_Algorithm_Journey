@@ -1,5 +1,6 @@
 package class21;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -50,7 +51,8 @@ public class Code04_CoinsWaySameValueSamePapper {
 			return rest == 0 ? 1 : 0;
 		}
 		int ways = 0;
-		for (int zhang = 0; zhang * coins[index] <= rest && zhang <= zhangs[index]; zhang++) {
+		for (int zhang = 0; zhang * coins[index] <= rest
+				&& zhang <= zhangs[index]; zhang++) {
 			ways += process(coins, zhangs, index + 1, rest - (zhang * coins[index]));
 		}
 		return ways;
@@ -69,7 +71,8 @@ public class Code04_CoinsWaySameValueSamePapper {
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 0; rest <= aim; rest++) {
 				int ways = 0;
-				for (int zhang = 0; zhang * coins[index] <= rest && zhang <= zhangs[index]; zhang++) {
+				for (int zhang = 0; zhang * coins[index] <= rest
+				&& zhang <= zhangs[index]; zhang++) {
 					ways += dp[index + 1][rest - (zhang * coins[index])];
 				}
 				dp[index][rest] = ways;
@@ -130,6 +133,7 @@ public class Code04_CoinsWaySameValueSamePapper {
 			int[] arr = randomArray(maxLen, maxValue);
 			int aim = (int) (Math.random() * maxValue);
 			int ans1 = coinsWay(arr, aim);
+//			int ans3 = coinsWay1(arr, aim);
 			int ans2 = dp1(arr, aim);
 			int ans3 = dp2(arr, aim);
 			if (ans1 != ans2 || ans1 != ans3) {
@@ -144,5 +148,25 @@ public class Code04_CoinsWaySameValueSamePapper {
 		}
 		System.out.println("测试结束");
 	}
+//	public static int coinsWay1(int[] arr, int aim) {
+//		if (arr == null || arr.length == 0 || aim < 0) {
+//			return 0;
+//		}
+//		Arrays.sort(arr);
+//		return process1(arr, 0, aim);
+//	}
+//
+//	private static int process1(int[] arr, int index, int rest) {
+//		if (rest < 0) {
+//			return 0;
+//		}
+//		if (rest == 0){
+//			return 1;
+//		}
+//		if (arr.length == index) {
+//			return rest == 0 ? 1 : 0;
+//		}
+//		return process1(arr, index + 1, rest) + process1(arr, index + 1, rest - arr[index]);
+//	}
 
 }
