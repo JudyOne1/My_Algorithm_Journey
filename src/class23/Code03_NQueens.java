@@ -13,7 +13,7 @@ public class Code03_NQueens {
 	// 当前来到i行，一共是0~N-1行
 	// 在i行上放皇后，所有列都尝试
 	// 必须要保证跟之前所有的皇后不打架
-	// int[] record record[x] = y 之前的第x行的皇后，放在了y列上
+	// int[] record ; record[x] = y 之前的第x行的皇后，放在了y列上
 	// 返回：不关心i以上发生了什么，i.... 后续有多少合法的方法数
 	public static int process1(int i, int[] record, int n) {
 		if (i == n) {
@@ -27,7 +27,7 @@ public class Code03_NQueens {
 				res += process1(i + 1, record, n);
 			}
 		}
-		return res;
+		return res;//都放完了res or 放不下进行回溯
 	}
 
 	public static boolean isValid(int[] record, int i, int j) {

@@ -22,14 +22,15 @@ public class Code02_SplitSumClosedSizeHalf {
 		if (i == arr.length) {
 			return picks == 0 ? 0 : -1;
 		} else {
+			// 不拿这个数
 			int p1 = process(arr, i + 1, picks, rest);
-			// 就是要使用arr[i]这个数
+			// 拿这个数
 			int p2 = -1;
 			int next = -1;
 			if (arr[i] <= rest) {
 				next = process(arr, i + 1, picks - 1, rest - arr[i]);
 			}
-			if (next != -1) {
+			if (next != -1) {//后续有效
 				p2 = arr[i] + next;
 			}
 			return Math.max(p1, p2);
@@ -51,7 +52,7 @@ public class Code02_SplitSumClosedSizeHalf {
 		for (int i = 0; i <= N; i++) {
 			for (int j = 0; j <= M; j++) {
 				for (int k = 0; k <= sum; k++) {
-					dp[i][j][k] = -1;
+					dp[i][j][k] = -1;//全部设定为无效
 				}
 			}
 		}

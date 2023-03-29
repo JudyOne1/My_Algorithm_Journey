@@ -10,6 +10,7 @@ public class Code01_SplitSumClosed {
 		for (int num : arr) {
 			sum += num;
 		}
+		//  -1 >> 1 = -1
 		return process(arr, 0, sum / 2);
 	}
 
@@ -22,7 +23,7 @@ public class Code01_SplitSumClosed {
 			int p1 = process(arr, i + 1, rest);
 			// 可能性2，要使用arr[i]
 			int p2 = 0;
-			if (arr[i] <= rest) {
+			if (arr[i] <= rest) {//上游，使得rest>0
 				p2 = arr[i] + process(arr, i + 1, rest - arr[i]);
 			}
 			return Math.max(p1, p2);
