@@ -34,8 +34,54 @@ public class MyCode01_KillMonster {
         int ways = 0;
         for (int i = 0; i <= M; i++) {
             ways += process(times - 1, M, hp - i);
-
         }
         return ways;
+    }
+
+    public static double dp1(int N, int M, int K) {
+        if (N < 1 || M < 1 || K < 1) {
+            return 0;
+        }
+        long all = (long) Math.pow(M + 1, K);
+        long[][] dp = new long[K + 1][N + 1];
+        dp[0][0] = 1;
+        for (int time = 1; time <= K; time++) {
+            dp[time][0] = (long) Math.pow(M + 1, time);
+            for (int hp = 1; hp <= N; hp++) {
+                for (int i = 0; i <= M; i++) {//枚举
+                    if (hp - i > 0) {
+                        dp[time][hp] += dp[time - 1][hp - i];
+                    } else {
+                        dp[time][hp] += (long) Math.pow(M + 1, time - 1);
+                    }
+
+                }
+            }
+        }
+        long kill = dp[K][N];
+        return (double) ((double) kill / (double) all);
+
+    }
+
+    public static void main(String[] args) {
+        int NMax = 10;
+        int MMax = 10;
+        int KMax = 10;
+        int testTime = 200;
+        System.out.println("测试开始");
+        for (int i = 0; i < testTime; i++) {
+            int N = (int) (Math.random() * NMax);
+            int M = (int) (Math.random() * MMax);
+            int K = (int) (Math.random() * KMax);
+            double ans1 = right(N, M, K);
+            double ans2 = dp1(N, M, K);
+//            double ans3 = dp2(N, M, K);
+//            if (ans1 != ans2 || ans1 != ans3) {
+            if (ans1 != ans2) {
+                System.out.println("Oops!");
+                break;
+            }
+        }
+        System.out.println("测试结束");
     }
 }
