@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Code02_EveryStepShowBoss {
-
+//TODO
 	public static class Customer {
 		public int id;
 		public int buy;

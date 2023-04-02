@@ -14,16 +14,16 @@ public class Code03_HeapSort {
 //		for (int i = 0; i < arr.length; i++) { // O(N)
 //			heapInsert(arr, i); // O(logN)
 //		}
-		// O(N)
+		// O(N) 建堆
 		for (int i = arr.length - 1; i >= 0; i--) {
 			heapify(arr, i, arr.length);
 		}
 		int heapSize = arr.length;
-		swap(arr, 0, --heapSize);
+		swap(arr, 0, --heapSize);//把堆的最大值和堆末尾的值交换 固定最大值在末尾
 		// O(N*logN)
 		while (heapSize > 0) { // O(N)
-			heapify(arr, 0, heapSize); // O(logN)
-			swap(arr, 0, --heapSize); // O(1)
+			heapify(arr, 0, heapSize); // O(logN) 将换到堆顶的“末尾值”heapify下去
+			swap(arr, 0, --heapSize); // O(1) 继续交换 固定次大值
 		}
 	}
 
