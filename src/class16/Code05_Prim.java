@@ -20,15 +20,11 @@ public class Code05_Prim {
 	public static Set<Edge> primMST(Graph graph) {
 		// 解锁的边进入小根堆
 		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
-
 		// 哪些点被解锁出来了
 		HashSet<Node> nodeSet = new HashSet<>();
-		
-		
-		
 		Set<Edge> result = new HashSet<>(); // 依次挑选的的边在result里
 
-		for (Node node : graph.nodes.values()) { // 随便挑了一个点
+		for (Node node : graph.nodes.values()) {
 			// node 是开始点
 			if (!nodeSet.contains(node)) {
 				nodeSet.add(node);

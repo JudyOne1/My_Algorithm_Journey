@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 // no negative weight
 public class Code06_Dijkstra {
-
+//------------------暴力遍历-------------------
 	public static HashMap<Node, Integer> dijkstra1(Node from) {
 		HashMap<Node, Integer> distanceMap = new HashMap<>();
 		distanceMap.put(from, 0);
@@ -43,7 +43,7 @@ public class Code06_Dijkstra {
 		}
 		return minNode;
 	}
-
+//-------------------------加强堆---------------------------------
 	public static class NodeRecord {
 		public Node node;
 		public int distance;
@@ -109,9 +109,9 @@ public class Code06_Dijkstra {
 		private void heapify(int index, int size) {
 			int left = index * 2 + 1;
 			while (left < size) {
-				int smallest = left + 1 < size && distanceMap.get(nodes[left + 1]) < distanceMap.get(nodes[left])
-						? left + 1
-						: left;
+				int smallest = left + 1 < size &&
+						distanceMap.get(nodes[left + 1]) < distanceMap.get(nodes[left])
+						? left + 1 : left;
 				smallest = distanceMap.get(nodes[smallest]) < distanceMap.get(nodes[index]) ? smallest : index;
 				if (smallest == index) {
 					break;
