@@ -121,6 +121,5 @@ public class MyCode06_Dijkstra {
             }
             return result;
         }
-
     }
 }
