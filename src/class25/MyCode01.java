@@ -56,7 +56,7 @@ public class MyCode01 {
         int[][] res = new int[arr.length][2];
         Stack<List<Integer>> stack = new Stack<>();
         for (int i = 0; i < arr.length; i++) {
-            while (!stack.isEmpty() && stack.peek().get(0)>arr[i]){
+            while (!stack.isEmpty() && arr[stack.peek().get(0)]>arr[i]){
                 //找到更小的了
                 List<Integer> popIs = stack.pop();
                 int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(stack.peek().size()-1);
@@ -66,7 +66,7 @@ public class MyCode01 {
                     res[popI][1] = i;
                 }
             }
-            if (!stack.isEmpty() && stack.peek().get(0) == arr[i]){
+            if (!stack.isEmpty() && arr[stack.peek().get(0)] == arr[i]){
                 //相同，加到链表尾部
                 stack.peek().add(Integer.valueOf(i));
             }else {

@@ -42,6 +42,29 @@ public class Code02_AllTimesMinToMax {
 		}
 		return max;
 	}
+	public static int max3(int[] arr) {
+		int max = 0;
+		//生成前缀和数组
+		int[] sums = new int[arr.length];
+		sums[0] = arr[0];
+		for (int i = 1; i < arr.length; i++) {
+			sums[i] = arr[i] + sums[i - 1];
+		}
+		Stack<Integer> stack = new Stack<>();
+		for (int i = 0; i < arr.length; i++) {
+			while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+				Integer index = stack.pop();//以index作为最小值
+				//                                          index右边最小的值👇    index左边最小的数👇
+				max = Math.max(max, (stack.isEmpty() ? sums[i - 1] : (sums[i - 1] - sums[stack.peek()])) * arr[index]);
+			}
+			stack.push(i);
+		}
+		while (!stack.isEmpty()) {
+			Integer index = stack.pop();
+			max = Math.max(max, (stack.isEmpty() ? sums[arr.length - 1] : (sums[arr.length - 1] - sums[stack.peek()])) * arr[index]);
+		}
+		return max;
+	}
 
 	public static int[] gerenareRondomArray() {
 		int[] arr = new int[(int) (Math.random() * 20) + 10];
@@ -52,17 +75,22 @@ public class Code02_AllTimesMinToMax {
 	}
 
 	public static void main(String[] args) {
+		int[] array = {2,5,4,2,4,5,3,1,2,4};
+		if (max1(array) != max2(array)) {
+			System.out.println("FUCK!");
+		}
 		int testTimes = 2000000;
 		System.out.println("test begin");
 		for (int i = 0; i < testTimes; i++) {
 			int[] arr = gerenareRondomArray();
-			if (max1(arr) != max2(arr)) {
+			if (max1(arr) != max3(arr)) {
 				System.out.println("FUCK!");
 				break;
 			}
 		}
 		System.out.println("test finish");
 	}
+
 
 	// 本题可以在leetcode上找到原题
 	// 测试链接 : https://leetcode.com/problems/maximum-subarray-min-product/
