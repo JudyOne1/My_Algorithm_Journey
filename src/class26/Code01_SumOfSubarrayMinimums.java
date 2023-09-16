@@ -1,5 +1,7 @@
 package class26;
 
+import java.util.Stack;
+
 // 测试链接：https://leetcode.com/problems/sum-of-subarray-minimums/
 // subArrayMinSum1是暴力解
 // subArrayMinSum2是最优解的思路
@@ -129,6 +131,45 @@ public class Code01_SumOfSubarrayMinimums {
 		}
 		System.out.println();
 	}
+	//3124
+	public static int sumSubarrayMins0(int[] arr) {
+		int res = 0;
+		int[][] arrRes = new int[arr.length][2];
+		Stack<Integer> stack = new Stack<>();
+		for (int i = 0; i < arr.length; i++) {
+			while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]){
+				Integer index = stack.pop();
+				int leftNearLess = stack.isEmpty() ? -1 : stack.peek();
+				arrRes[index][0] = leftNearLess;
+				if (arr[index] == arr[i]){
+					for (int j = i+1; j < arr.length; j++) {
+						if (arr[j]<arr[index]){
+							arrRes[index][1] = j;
+						}else {
+							arrRes[index][1] = -1;
+						}
+					}
+				}else {
+					arrRes[index][1] = i;
+				}
+			}
+			stack.push(i);
+		}
+		while (!stack.isEmpty()){
+			Integer index = stack.pop();
+			int leftNearLess = stack.isEmpty() ? -1 : stack.peek();
+			arrRes[index][0] = leftNearLess;
+			arrRes[index][1] = -1;
+		}
+		for (int i = 0; i < arr.length; i++) {
+			int left = arrRes[i][0];
+			int right = arrRes[i][1];
+			int leftSize = i-left;
+			int rightSize = right==-1?1:right-i;
+			res +=leftSize*rightSize*arr[i];
+		}
+		return res;
+	}
 
 	public static void main(String[] args) {
 		int maxLen = 100;
@@ -141,11 +182,13 @@ public class Code01_SumOfSubarrayMinimums {
 			int ans1 = subArrayMinSum1(arr);
 			int ans2 = subArrayMinSum2(arr);
 			int ans3 = sumSubarrayMins(arr);
-			if (ans1 != ans2 || ans1 != ans3) {
+			int ans4 = sumSubarrayMins0(arr);
+			if (ans1 != ans2 || ans1 != ans3 || ans1 != ans4) {
 				printArray(arr);
 				System.out.println(ans1);
 				System.out.println(ans2);
 				System.out.println(ans3);
+				System.out.println(ans4);
 				System.out.println("出错了！");
 				break;
 			}

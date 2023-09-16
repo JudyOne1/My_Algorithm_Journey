@@ -76,7 +76,8 @@ public class Code02_AllTimesMinToMax {
 
 	public static void main(String[] args) {
 		int[] array = {2,5,4,2,4,5,3,1,2,4};
-		if (max1(array) != max2(array)) {
+		int[] array1 = {1,2,3,2};
+		if (max1(array1) != maxSumMinProduct00(array1)) {
 			System.out.println("FUCK!");
 		}
 		int testTimes = 2000000;
@@ -89,6 +90,39 @@ public class Code02_AllTimesMinToMax {
 			}
 		}
 		System.out.println("test finish");
+	}
+
+	public static int maxSumMinProduct00(int[] nums) {
+		//前缀和
+		long[] numsPlus = new long[nums.length];
+		numsPlus[0] = nums[0];
+		for(int i = 1;i<nums.length;i++){
+			numsPlus[i] = nums[i] + numsPlus[i-1];
+		}
+		long max = 0;
+		Stack<Integer> stack = new Stack<>();
+		int[][] minStack = new int[nums.length][2];
+		for(int i = 0;i<nums.length;i++){
+			while(!stack.isEmpty()&& nums[stack.peek()]>=nums[i]){
+				int index = stack.pop();
+				int leftLess = stack.isEmpty()?-1:stack.peek();
+				minStack[index][0] = leftLess;
+				minStack[index][1] = i;
+			}
+			stack.push(i);
+		}
+		while(!stack.isEmpty()){
+			int index = stack.pop();
+			int leftLess = stack.isEmpty()?-1:stack.peek();
+			minStack[index][0] = leftLess;
+			minStack[index][1] = -1;
+		}
+		for(int i = 0;i<nums.length;i++){
+			long leftNum = minStack[i][0]==-1?0:numsPlus[minStack[i][0]];
+			long rightNum = minStack[i][1]==-1?numsPlus[nums.length-1]:numsPlus[minStack[i][1]-1];
+			max = Math.max(max, (long) nums[i] *(rightNum-leftNum));
+		}
+		return (int)(max % 1000000007);
 	}
 
 
