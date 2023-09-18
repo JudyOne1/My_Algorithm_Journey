@@ -64,6 +64,35 @@ public class Code01_Knapsack {
         int bag = 15;
         System.out.println(maxValue(weights, values, bag));
         System.out.println(dp(weights, values, bag));
+        System.out.println(maxValue00(weights, values, bag));
     }
+
+    public static int maxValue00(int[] weights, int[] values, int bag) {
+        return process00(weights, values, 0, bag);
+    }
+
+    private static int process00(int[] weights, int[] values, int index, int rest) {
+        //base case
+        if (rest < 0) {
+            //拿不下了
+            return -1;
+        }
+        if (rest == 0){
+            return 0;
+        }
+        if (index == weights.length){
+            return 0;
+        }
+        //拿
+        int price1 = process00(weights, values, index + 1, rest - weights[index]) + values[index];
+        if (price1 == -1) {
+            price1 = 0;
+        }
+        //不拿
+        int price2 = process00(weights, values, index + 1, rest);
+        int price = Math.max(price1, price2);
+        return price;
+    }
+
 
 }

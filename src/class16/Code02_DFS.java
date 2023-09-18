@@ -5,6 +5,7 @@ import java.util.Stack;
 
 public class Code02_DFS {
 
+	//深度优先遍历
 	public static void dfs(Node node) {
 		if (node == null) {
 			return;
@@ -27,8 +28,4 @@ public class Code02_DFS {
 			}
 		}
 	}
-	
-	
-	
-
 }

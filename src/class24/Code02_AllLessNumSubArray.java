@@ -28,6 +28,7 @@ public class Code02_AllLessNumSubArray {
 	}
 
 	public static int num(int[] arr, int sum) {
+		//一个数组达标，那么内部所有子数组都达标
 		if (arr == null || arr.length == 0 || sum < 0) {
 			return 0;
 		}
@@ -35,7 +36,7 @@ public class Code02_AllLessNumSubArray {
 		int count = 0;
 		LinkedList<Integer> maxWindow = new LinkedList<>();
 		LinkedList<Integer> minWindow = new LinkedList<>();
-		int R = 0;
+		int R = 0;//公用的R
 		for (int L = 0; L < N; L++) {
 			while (R < N) {
 				while (!maxWindow.isEmpty() && arr[maxWindow.peekLast()] <= arr[R]) {

@@ -70,7 +70,7 @@ public class Code06_NetworkDelayTime {
 	public static class Heap {
 		public boolean[] used;
 		public int[][] heap;
-		public int[] hIndex;
+		public int[] hIndex;//反向索引表
 		public int size;
 
 		public Heap(int n) {

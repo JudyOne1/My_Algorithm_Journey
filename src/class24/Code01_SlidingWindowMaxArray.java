@@ -33,18 +33,29 @@ public class Code01_SlidingWindowMaxArray {
 		}
 		// qmax 窗口最大值的更新结构
 		// 放下标
+		/**
+		 * --------------------
+		 * 【首】 大 -> 小 【尾】
+		 * --------------------
+		 */
 		LinkedList<Integer> qmax = new LinkedList<Integer>();
 		int[] res = new int[arr.length - w + 1];
 		int index = 0;
 		for (int R = 0; R < arr.length; R++) {
 			while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[R]) {
+				//弹出尾部
 				qmax.pollLast();
 			}
+			//空 || 满足 大->小
 			qmax.addLast(R);
+			//R - w 是 过期的下标
 			if (qmax.peekFirst() == R - w) {
+				//弹出过期的首部
 				qmax.pollFirst();
 			}
+			//形成正常的窗口
 			if (R >= w - 1) {
+				//填写答案
 				res[index++] = arr[qmax.peekFirst()];
 			}
 		}
