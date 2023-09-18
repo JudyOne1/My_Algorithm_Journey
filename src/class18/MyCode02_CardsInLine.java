@@ -106,4 +106,150 @@ public class MyCode02_CardsInLine {
         }
         return Math.max(fmap[0][N - 1], gmap[0][N - 1]);
     }
+
+
+
+    public static boolean predictTheWinner1(int[] nums) {
+
+        return winner1(nums);
+    }
+
+    private static boolean winner1(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        int first = frist1(nums, left, right);
+        int later = later1(nums, left, right);
+        System.out.println(first);
+        System.out.println(later);
+        return first >= later ? true : false;
+    }
+
+    private static int frist1(int[] nums, int left, int right) {
+        if (left == right){
+            return nums[left];
+        }
+        return Math.max(nums[left]+later1(nums,left+1,right),nums[right]+later1(nums,left,right-1));
+    }
+
+    private static int later1(int[] nums, int left, int right) {
+        if (left == right){
+            return 0;
+        }
+        return Math.min(frist1(nums,left+1,right),frist1(nums,left,right-1));
+    }
+    private static boolean winner2(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        int N = nums.length;
+        int[][] fMap = new int[N][N];
+        int[][] lMap = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                fMap[i][j] = -1;
+                lMap[i][j] = -1;
+            }
+        }
+//        for (int i = 0; i < N; i++) {
+//            lMap[i][i] = 0;
+//            fMap[i][i] = nums[i];
+//        }
+        int first = frist2(nums, left, right,fMap,lMap);
+        int later = later2(nums, left, right,fMap,lMap);
+        System.out.println(first);
+        System.out.println(later);
+        return first >= later ? true : false;
+    }
+
+    private static int frist2(int[] nums, int left, int right, int[][] fMap, int[][] lMap) {
+        if (fMap[left][right] != -1){
+            return fMap[left][right];
+        }
+        int ans = 0;
+        if (left == right){
+            ans = nums[left];
+        }else {
+            ans =  Math.max(nums[left]+later2(nums,left+1,right,fMap,lMap),nums[right]+later2(nums,left,right-1,fMap,lMap));
+        }
+        fMap[left][right] = ans;
+        return ans;
+    }
+
+    private static int later2(int[] nums, int left, int right, int[][] fMap, int[][] lMap) {
+        if (lMap[left][right] != -1){
+            return lMap[left][right];
+        }
+        int ans = 0;
+        if (left != right){
+            ans = Math.min(frist2(nums,left+1,right,fMap,lMap),frist2(nums,left,right-1,fMap,lMap));
+        }
+        lMap[left][right] = ans;
+        return ans;
+    }
+    private static boolean winner3(int[] nums) {
+        int N = nums.length;
+        int[][] fMap = new int[N][N];
+        int[][] lMap = new int[N][N];
+
+        //base case
+        for (int i = 0; i < N; i++) {
+            fMap[i][i] = nums[i];
+        }
+
+        //推演
+        for (int startCol = 1; startCol < N; startCol++) {
+            int l = 0;
+            int r = startCol;
+            while (r<N){
+                fMap[l][r] = Math.max(nums[l]+lMap[l+1][r],nums[r]+lMap[l][r-1]);
+                lMap[l][r] = Math.min(fMap[l+1][r],fMap[l][r-1]);
+                l++;
+                r++;
+            }
+        }
+
+        int first = fMap[0][N-1];
+        int later = lMap[0][N-1];
+
+        printTwoDimensionalArray(fMap);
+        printTwoDimensionalArray(lMap);
+        System.out.println(first);
+        System.out.println(later);
+
+        return first >= later ? true : false;
+
+        //
+//        for (int i = 0; i < N; i++) {
+//            fMap[i][i] = nums[i];
+//        }
+//        for (int startCol = 0; startCol < N; startCol++) {
+//            int left = 0;
+//            int right = startCol;
+//            while (right<N){
+//                //从下往上
+//                fMap[left][right] = Math.max(nums[left]+lMap[left+1][right],nums[right]+lMap[left][right-1]);
+//                lMap[left][right] = Math.min(fMap[left+1][right],fMap[left][right-1]);
+//                right--;
+//                left++;
+//            }
+//
+//
+//        }
+//        int first = fMap[0][N-1];
+//        int later = lMap[0][N-1];
+    }
+
+
+    public static void main(String[] args) {
+        int[] nums = {1,5,233,7};
+        System.out.println(winner3(nums));
+    }
+    public static void printTwoDimensionalArray(int[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                System.out.print(array[i][j] + " ");
+            }
+            System.out.println();  // 打印完一行后换行
+        }
+    }
+
 }
