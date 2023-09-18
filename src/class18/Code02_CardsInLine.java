@@ -7,6 +7,9 @@ public class Code02_CardsInLine {
         if (arr == null || arr.length == 0) {
             return 0;
         }
+        if (arr.length == 1 && arr[0] == 0){
+            return 1;
+        }
         int first = f1(arr, 0, arr.length - 1);
         int second = g1(arr, 0, arr.length - 1);
         return Math.max(first, second);

@@ -90,4 +90,77 @@ public class MyCode01_RobotWalk {
         System.out.println(ways2(5, 2, 4, 6));
         System.out.println(ways3(5, 2, 4, 6));
     }
+
+
+    public static int myRobotWalk1(int N, int M, int K, int P) {
+        return walk1(N, M, K, P);
+    }
+
+    private static int walk1(int N, int cur, int rest, int p) {
+        if (rest == 0) {
+            return cur == p ? 1 : 0;
+        }
+        if (cur == 1) {
+            return walk1(N, cur + 1, rest - 1, p);
+        } else if (cur == N) {
+            return walk1(N, cur - 1, rest - 1, p);
+        } else {
+            return walk1(N, cur - 1, rest - 1, p) + walk1(N, cur + 1, rest - 1, p);
+        }
+    }
+
+    public static int myRobotWalk2(int N, int M, int K, int P) {
+        int[][] dp = new int[N + 1][K + 1];
+        for (int i = 0; i < dp.length; i++) {
+            for (int j = 0; j < dp[0].length; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        walk2(N, M, K, P, dp);
+        return dp[M][K];
+
+    }
+
+    private static int walk2(int N, int cur, int rest, int p, int[][] dp) {
+        if (dp[cur][rest] != -1) { //缓存命中
+            return dp[cur][rest];
+        }
+        int ans = 0;
+        if (rest == 0) {
+            ans = cur == p ? 1 : 0;
+        }
+        if (dp[cur][rest] == -1) {
+            if (cur == 1) {
+                ans =  walk2(N, cur + 1, rest - 1, p, dp);
+            } else if (cur == N) {
+                ans =  walk2(N, cur - 1, rest - 1, p, dp);
+            } else {
+                ans =  walk2(N, cur - 1, rest - 1, p, dp) + walk2(N, cur + 1, rest - 1, p, dp);
+            }
+            dp[cur][rest] = ans;
+
+        }
+        return ans;
+    }
+
+    public static int myRobotWalk3(int N, int M, int K, int P) {
+        int[][] dp = new int[N + 1][K + 1];
+        int cur = M;
+        int rest = K;
+        int aim = P;
+        dp[aim][0] = 1;
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 1; j < dp[0].length; j++) {
+                if (j == 1){
+                    dp[cur][rest] = dp[cur+1][rest-1];
+                }else if (j==dp[0].length-1){
+                    dp[cur][rest] = dp[cur-1][rest-1];
+                }else {
+                    dp[cur][rest] = dp[cur-1][rest-1]+dp[cur+1][rest-1];
+                }
+            }
+        }
+        return dp[M][K];
+    }
+
 }

@@ -1,6 +1,7 @@
 package class17;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Code04_PrintAllPermutations {
@@ -79,6 +80,26 @@ public class Code04_PrintAllPermutations {
 					swap(str, index, i);
 				}
 			}
+		}
+	}
+
+	public static List<String> MySelfPermutation(String s){
+		ArrayList<String> ans = new ArrayList<>();
+		char[] str = s.toCharArray();
+		precess(ans,str,0);
+		return ans;
+	}
+
+	private static void precess(ArrayList<String> ans, char[] str, int index) {
+		if (index == str.length){
+			//base case
+			ans.add(Arrays.toString(str));
+			return;
+		}
+		for (int i = index; i < str.length; i++) {
+			swap(str,index,i);
+			precess(ans,str,index+1);
+			swap(str,index,i);
 		}
 	}
 

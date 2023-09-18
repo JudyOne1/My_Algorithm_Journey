@@ -14,8 +14,8 @@ public class Code01_Knapsack {
         return process(w, v, 0, bag);
     }
 
-    // index 0~N
-    // rest 负~bag
+    // index  0~N
+    // rest   负~bag
     public static int process(int[] w, int[] v, int index, int rest) {
         if (rest < 0) {
             return -1;

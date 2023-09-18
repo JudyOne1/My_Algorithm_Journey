@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import static class47.Code02_RestoreWays.process0;
+
 public class Code03_PrintAllSubsquences {
 
 	// s -> "abc" ->
@@ -69,6 +71,23 @@ public class Code03_PrintAllSubsquences {
 		}
 		System.out.println("=================");
 
+	}
+	public static List<String> printAllSon(String str){
+		char[] chars = str.toCharArray();
+		String path = "";
+		List<String> ans = new ArrayList<>();
+		process0(chars,0,path,ans);
+		return ans;
+	}
+
+	private static void process0(char[] chars, int index,String path, List<String> ans) {
+		if (index == chars.length){
+			//到最后了，将结果保存
+			ans.add(path);
+		}
+		//可以要可以不要，要就带上去下一个位置，不要就直接去下一个位置。
+		process0(chars,index+1,path+chars[index],ans);
+		process0(chars,index+1,path,ans);
 	}
 
 }
