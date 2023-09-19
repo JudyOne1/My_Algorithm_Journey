@@ -22,6 +22,9 @@ public class MyCode01_Knapsack {
         if (rest == 0){
             return 0;
         }
+        if (index == weights.length){
+            return 0;
+        }
         //拿
         int price1 = process00(weights, values, index + 1, rest - weights[index]) + values[index];
         if (price1 == -1) {
@@ -77,7 +80,28 @@ public class MyCode01_Knapsack {
         int[] values = {5, 6, 3, 19, 12, 4, 2};
         int bag = 15;
         System.out.println(maxValue(weights, values, bag));
+        System.out.println(maxValue00(weights, values, bag));
         System.out.println(dp(weights, values, bag));
+        System.out.println(maxValue01(weights, values, bag));
+    }
+
+    public static int maxValue01(int[] weights, int[] values, int bag) {
+        int N = weights.length;
+        int[][] dp = new int[N+1][bag+1];
+
+        for (int index = N-1; index >= 0; index--) {
+            for (int rest = 0; rest <= bag; rest++) {
+                if (rest == 0){
+                    //base case
+                    dp[index][rest] = 0;
+                }
+                int ans1 = rest-weights[index] >= 0?dp[index+1][rest-weights[index]]+values[index]:0;
+                int ans2 = dp[index+1][rest];
+
+                dp[index][rest] = Math.max(ans1,ans2);
+            }
+        }
+        return dp[0][bag];
     }
 
 }
