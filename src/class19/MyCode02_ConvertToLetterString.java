@@ -108,15 +108,54 @@ public class MyCode02_ConvertToLetterString {
             int ans0 = number(s);
             int ans1 = dp1(s);
             int ans2 = dp2(s);
-            if (ans0 != ans1 || ans0 != ans2) {
+            int ans3 = ConvertToLetterString00(s);
+            if (ans0 != ans1 || ans0 != ans2 || ans0 != ans3) {
+                //貌似出错了
                 System.out.println(s);
                 System.out.println(ans0);
                 System.out.println(ans1);
                 System.out.println(ans2);
+                System.out.println(ans3);
                 System.out.println("Oops!");
                 break;
             }
         }
         System.out.println("测试结束");
     }
+
+    /**
+     * 规定1和A对应、2和B对应、3和C对应 ... 26和Z对应
+     * 那么一个数字字符串比如"111”就可以转化为:
+     * "AAA"、"KA"和"AK"
+     * 给定一个只有数字字符组成的字符串str，返回有多少种转化结果
+     */
+    public static int ConvertToLetterString00(String str) {
+        if (str == null || str.length() == 0) {
+            return 0;
+        }
+        char[] charArray = str.toCharArray();
+        return process00(charArray, 0);
+    }
+
+    private static int process00(char[] charArray, int index) {
+        //base case
+        if (index == charArray.length) {
+            return 1;
+        }
+        if (index > charArray.length) {
+            return 0;
+        }
+        if (charArray[index] == '0') {
+            return 0;
+        }
+        //只是一个
+        int ways = process00(charArray, index + 1);
+        //两个一起
+        if (index + 1 < charArray.length && Integer.valueOf(charArray[index] + "" + charArray[index + 1]) < 27) {
+            ways += process00(charArray, index + 2);
+        }
+        return ways;
+    }
+
+
 }
