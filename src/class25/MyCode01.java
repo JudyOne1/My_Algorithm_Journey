@@ -18,7 +18,8 @@ public class MyCode01 {
         int[][] res = new int[arr.length][2];
         Stack<Integer> stack = new Stack<>();//栈中只存储位置，位置所代表的值从栈底到栈顶由小到大
         for (int i = 0; i < arr.length; i++) {//数组遍历位置index
-            while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {//栈非空并且栈顶位置上的数大于arr[i]【找到index位置上左边最小的】
+            while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
+                //栈非空并且栈顶位置上的数大于arr[i]【找到index位置上左边最小的】
                 //eg  stack[0.1]  arr[5.6.3]  i=2  6>3
                 //          ↑ ↑
                 //          5.6

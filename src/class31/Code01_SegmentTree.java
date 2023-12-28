@@ -35,6 +35,7 @@ public class Code01_SegmentTree {
 		// 分发策略是什么
 		// ln表示左子树元素结点个数，rn表示右子树结点个数
 		private void pushDown(int rt, int ln, int rn) {
+			//下发更新信息
 			if (update[rt]) {
 				update[rt << 1] = true;
 				update[rt << 1 | 1] = true;
@@ -46,6 +47,7 @@ public class Code01_SegmentTree {
 				sum[rt << 1 | 1] = change[rt] * rn;
 				update[rt] = false;
 			}
+			//下发增加信息
 			if (lazy[rt] != 0) {
 				lazy[rt << 1] += lazy[rt];
 				sum[rt << 1] += lazy[rt] * ln;
@@ -69,7 +71,7 @@ public class Code01_SegmentTree {
 			pushUp(rt);
 		}
 
-		
+
 		// L~R  所有的值变成C
 		// l~r  rt
 		public void update(int L, int R, int C, int l, int r, int rt) {
@@ -92,7 +94,7 @@ public class Code01_SegmentTree {
 			pushUp(rt);
 		}
 
-		// L~R, C 任务！
+		// L~R, C  任务！
 		// rt，l~r
 		public void add(int L, int R, int C, int l, int r, int rt) {
 			// 任务如果把此时的范围全包了！

@@ -149,11 +149,13 @@ public class Code01_MonotonousStack {
 		for (int i = 0; i < testTimes; i++) {
 			int[] arr1 = getRandomArrayNoRepeat(size);
 			int[] arr2 = getRandomArray(size, max);
+			//getNearLessNoRepeat
 			if (!isEqual(getNearLessNoRepeat(arr1), rightWay(arr1))) {
 				System.out.println("Oops!");
 				printArray(arr1);
 				break;
 			}
+			//getNearLess
 			if (!isEqual(getNearLess(arr2), rightWay(arr2))) {
 				System.out.println("Oops!");
 				printArray(arr2);

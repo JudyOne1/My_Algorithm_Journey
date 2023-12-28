@@ -16,9 +16,10 @@ public class Code01_Manacher {
 		int R = -1;
 		int max = Integer.MIN_VALUE;
 		for (int i = 0; i < str.length; i++) { // 0 1 2
-			// R第一个违规的位置，i>= R
-			// i位置扩出来的答案，i位置扩的区域，至少是多大。
+			// R 第一个违规的位置，i >= R
+			// i 位置扩出来的答案，i 位置扩的区域，至少是多大。
 			pArr[i] = R > i ? Math.min(pArr[2 * C - i], R - i) : 1;
+
 			while (i + pArr[i] < str.length && i - pArr[i] > -1) {
 				if (str[i + pArr[i]] == str[i - pArr[i]])
 					pArr[i]++;

@@ -2,6 +2,10 @@ package class20;
 
 // 测试链接：https://leetcode.com/problems/longest-palindromic-subsequence/
 public class Code01_PalindromeSubsequence {
+	//在后面拼接一个main函数
+	public static void main(String[] args) {
+		System.out.println(lpsl1(args[0]));
+	}
 
 	public static int lpsl1(String s) {
 		if (s == null || s.length() == 0) {
