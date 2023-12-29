@@ -84,13 +84,13 @@ public class Code04_AC2 {
 				index = str[i] - 'a'; // 路
 				// 如果当前字符在这条路上没配出来，就随着fail方向走向下条路径
 				while (cur.nexts[index] == null && cur != root) {
-					cur = cur.fail;
+					cur = cur.fail;//蹦到下一个位置
 				}
 				// 1) 现在来到的路径，是可以继续匹配的
 				// 2) 现在来到的节点，就是前缀树的根节点
-				cur = cur.nexts[index] != null ? cur.nexts[index] : root;
+				cur = cur.nexts[index] != null ? cur.nexts[index] : root;//蹦到下一个位置了，看看能不能继续往下走
 				follow = cur;
-				while (follow != root) {
+				while (follow != root) {//看一圈
 					if (follow.endUse) {
 						break;
 					}
